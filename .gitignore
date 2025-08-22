@@ -1,0 +1,10 @@
+.cache/
+.git/
+compile_commands.json
+Bin/
+Engine/Intermediate/
+Engine/Build/Linux/Logs/
+
+*.log
+*.o
+*.so
