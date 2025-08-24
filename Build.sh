@@ -21,6 +21,7 @@ _bg_ShowHelp()
     echo "  --force                      - Force to always compile"
     echo "  --forcepurge                 - Force to always compile, purge old intermediate files"
     echo "  --tests                      - Creates a test build with tests"
+    echo "  --testsonly                  - Creates a test build only with tests"
     echo "  --customtargetpath <path>    - Compile project with custom path"
     echo "  --verbose                    - Print more informations"
     echo ""
@@ -366,6 +367,15 @@ HandleSwitch()
 
         g_IsDebug=true
         g_Macros="_TESTS _DEBUG $g_Macros"
+        _bg_BuildType=$_bg_ConstBuildTypeTests
+        return 0
+
+    fi
+
+    if [ "$switch" == "testsonly" ]; then
+
+        g_IsDebug=true
+        g_Macros="_TESTS_ONLY _DEBUG $g_Macros"
         _bg_BuildType=$_bg_ConstBuildTypeTests
         return 0
 

@@ -6,11 +6,15 @@
 
 
 #ifdef _TESTS
-#       include "Tests/TestMaster.h"
-#       include "Tests/Memory/HeapAllocatorTests.h"
-#       define RUNTESTS() do { ::Core::TestMaster::Get().Run(); } while (0)
-#   else 
-#       define RUNTESTS()
+#    include "Tests/TestMaster.h"
+#    include "Tests/Memory/HeapAllocatorTests.h"
+#    define RUNTESTS() do { ::Core::TestMaster::Get().Run(); } while (0)
+#elif _TESTS_ONLY 
+#    include "Tests/TestMaster.h"
+#    include "Tests/Memory/HeapAllocatorTests.h"
+#    define RUNTESTS() do { ::Core::TestMaster::Get().Run(); return 0; } while (0)
+#else 
+#    define RUNTESTS()
 #endif // !_TESTS
        
 
