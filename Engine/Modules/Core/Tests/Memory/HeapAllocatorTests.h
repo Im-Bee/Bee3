@@ -2,9 +2,7 @@
 
 
 #include "Assert.h"
-#include "Console.h"
 #include "Memory/HeapAllocator.h"
-#include "Memory/RawString.h"
 #include "Memory/Utils.h"
 #include "Tests/TestInstance.h"
 
@@ -70,11 +68,6 @@ TEST(HeapAlloctor)
     ASSERT(object.b, 20);
     ASSERT(object.c, 30);
     ASSERT(reinterpret_cast<USIZE>(pObj) % alignof(Object), 0);
-
-
-    CHAR8 pszMemoryLeft[32] = { 0 };
-    Core::Int64ToString(da.GetAmountOfMemoryLeft(), pszMemoryLeft);
-    Core::WriteToConsole(pszMemoryLeft);
 }
 
 TEST(HeapAlloctorReallocs)
@@ -107,6 +100,27 @@ TEST(HeapAlloctorReallocs)
     }
 }
 
+TEST(HeapAlloctorAligment)
+{
+    Core::Memory::HeapAllocator da(16);
+
+    double* pDoubleBuffer = reinterpret_cast<double*>(da.Allocate(240 * sizeof(double), alignof(double)));
+    ASSERT(reinterpret_cast<USIZE>(pDoubleBuffer) % alignof(double), 0);
+    double* pRealloc = reinterpret_cast<double*>(da.Reallocate(pDoubleBuffer, 240 * sizeof(double), alignof(double)));
+    ASSERT(reinterpret_cast<USIZE>(pRealloc) % alignof(double), 0);
+
+    class TestClass
+    {
+        UINT32 a, a1, a2;
+        UINT32 buff[58];
+        INT32 b;
+        INT16 c;
+        INT32 d;
+        CHAR8 e;
+    };
+
+    TestClass* pClass = reinterpret_cast<TestClass*>(da.Allocate(240 * sizeof(TestClass), alignof(TestClass)));
+}
 
 } // !Tests
 
