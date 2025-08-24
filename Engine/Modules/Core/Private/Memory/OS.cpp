@@ -38,6 +38,14 @@ void* ReserveMemory(USIZE uSizeInBytes)
                              MAP_ANONYMOUS | MAP_PRIVATE,
                              -1,
                              0)) == MAP_FAILED) {
+#ifdef _DEBUG
+        CHAR8 pszExceptionMsg[64] = { 0 };
+        USIZE uPos = Memory::CopyStr(pszExceptionMsg, "mmap failed errno = ");
+        Memory::Int32ToString(errno, &pszExceptionMsg[uPos]);
+
+        throw Exception(pszExceptionMsg);
+#endif // !_DEBUG
+ 
         throw Exception("mmap failed (MAP_FAILED)");
     }
    
@@ -47,19 +55,15 @@ void* ReserveMemory(USIZE uSizeInBytes)
 // ---------------------------------------------------------------------------------------------------------------------
 void LockMemory(void* pWhere, USIZE uSizeInBytes)
 {
-#ifdef _DEBUG
     if (mlock(pWhere, uSizeInBytes) != 0) {
+#ifdef _DEBUG
         CHAR8 pszExceptionMsg[64] = { 0 };
         USIZE uPos = Memory::CopyStr(pszExceptionMsg, "mlock failed errno = ");
         Memory::Int32ToString(errno, &pszExceptionMsg[uPos]);
 
         throw Exception(pszExceptionMsg);
-    }
-
-    return;
 #endif // !_DEBUG
        
-    if (mlock(pWhere, uSizeInBytes) != 0) {
         throw Exception("mlock failed");
     }
 }
@@ -67,19 +71,15 @@ void LockMemory(void* pWhere, USIZE uSizeInBytes)
 // ---------------------------------------------------------------------------------------------------------------------
 void UnlockMemory(void* pWhere, USIZE uSizeInBytes)
 {
-#ifdef _DEBUG
     if (munlock(pWhere, uSizeInBytes) != 0) {
+#ifdef _DEBUG
         CHAR8 pszExceptionMsg[64] = { 0 };
         USIZE uPos = Memory::CopyStr(pszExceptionMsg, "munlock failed errno = ");
         Memory::Int32ToString(errno, &pszExceptionMsg[uPos]);
 
         throw Exception(pszExceptionMsg);
-    }
-
-    return;
 #endif // !_DEBUG
-
-    if (munlock(pWhere, uSizeInBytes) != 0) {
+       
         throw Exception("munlock failed");
     }
 }
@@ -87,19 +87,15 @@ void UnlockMemory(void* pWhere, USIZE uSizeInBytes)
 // ---------------------------------------------------------------------------------------------------------------------
 void ReleasePage(void* pMemory)
 {
-#ifdef _DEBUG
     if (munmap(pMemory, OsDependent::GetSizeOfPage()) != 0) {
+#ifdef _DEBUG
         CHAR8 pszExceptionMsg[64] = { 0 };
         USIZE uPos = Memory::CopyStr(pszExceptionMsg, "munmap failed errno = ");
         Memory::Int32ToString(errno, &pszExceptionMsg[uPos]);
 
         throw Exception(pszExceptionMsg);
-    }
-
-    return;
 #endif // !_DEBUG
- 
-    if (munmap(pMemory, OsDependent::GetSizeOfPage()) != 0) {
+       
         throw Exception("munmap failed");
     }
 }
