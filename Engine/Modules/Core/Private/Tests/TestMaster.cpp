@@ -36,11 +36,11 @@ void TestMaster::Run()
     }
 
     CHAR8 pszPassed[16] = { 0 };
-    Core::Int32ToString(uTestsPassed, pszPassed);
+    Core::Memory::Int32ToString(uTestsPassed, pszPassed);
     Core::WriteToConsoleN(pszPassed, 16);
     Core::WriteToConsoleN(" tests passed out of ");
     CHAR8 pszOutOf[16] = { 0 };
-    Core::Int32ToString(m_uTestAmount, pszOutOf);
+    Core::Memory::Int32ToString(m_uTestAmount, pszOutOf);
     Core::WriteToConsole(pszOutOf, 16);
     Core::WriteToConsole("Tests finished...");
 }

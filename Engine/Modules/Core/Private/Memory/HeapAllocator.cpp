@@ -2,6 +2,7 @@
 
 #include "Exception.h"
 #include "Memory/Aligment.h"
+#include "Memory/Bytes.h"
 #include "Memory/OS.h"
 
 
@@ -20,7 +21,37 @@ HeapAllocator::HeapAllocator(USIZE uVirtualPages)
 // ---------------------------------------------------------------------------------------------------------------------
 HeapAllocator::~HeapAllocator()
 { 
-    OsDependent::ReleasePage(m_pMemoryPage);
+    if (m_pMemoryPage) {
+        OsDependent::ReleasePage(m_pMemoryPage);
+    }
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+HeapAllocator::HeapAllocator(const HeapAllocator& other) 
+    : m_uReservedVirtMem(other.m_uReservedVirtMem)
+    , m_pMemoryPage(OsDependent::ReserveMemory(m_uReservedVirtMem))
+{
+    USIZE uLenToLockCopy = reinterpret_cast<USIZE>(other.m_pFirstFree) - reinterpret_cast<USIZE>(other.m_pMemoryPage);
+
+    OsDependent::LockMemory(this->m_pMemoryPage, uLenToLockCopy);
+
+    CopyBytes(reinterpret_cast<BYTE*>(this->m_pMemoryPage),
+              reinterpret_cast<BYTE*>(other.m_pMemoryPage),
+              uLenToLockCopy);
+    
+    m_pFirstFree = reinterpret_cast<void*>(reinterpret_cast<USIZE>(m_pMemoryPage) + uLenToLockCopy);
+    m_pLastBlock = reinterpret_cast<HeapAllocator::Block*>(reinterpret_cast<USIZE>(m_pFirstFree) 
+                                                           - other.m_pLastBlock->uLen);
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+HeapAllocator::HeapAllocator(HeapAllocator&& other) 
+    : m_uReservedVirtMem(other.m_uReservedVirtMem)
+    , m_pMemoryPage(other.m_pMemoryPage)
+    , m_pFirstFree(other.m_pFirstFree)
+    , m_pLastBlock(other.m_pLastBlock)
+{ 
+    other.m_pMemoryPage = nullptr;
 }
 
 // ---------------------------------------------------------------------------------------------------------------------

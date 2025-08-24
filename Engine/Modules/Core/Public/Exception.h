@@ -18,6 +18,9 @@ public:
 
     ~Exception() noexcept = default;
 
+    Exception(const Exception&) = default;
+    Exception(Exception&&) = default;
+
 public:
 
     const CHAR8* GetReason() const noexcept

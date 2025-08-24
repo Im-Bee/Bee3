@@ -50,8 +50,8 @@ void LockMemory(void* pWhere, USIZE uSizeInBytes)
 #ifdef _DEBUG
     if (mlock(pWhere, uSizeInBytes) != 0) {
         CHAR8 pszExceptionMsg[64] = { 0 };
-        USIZE uPos = CopyStr(pszExceptionMsg, "mlock failed errno = ");
-        Int32ToString(errno, &pszExceptionMsg[uPos]);
+        USIZE uPos = Memory::CopyStr(pszExceptionMsg, "mlock failed errno = ");
+        Memory::Int32ToString(errno, &pszExceptionMsg[uPos]);
 
         throw Exception(pszExceptionMsg);
     }
@@ -70,8 +70,8 @@ void UnlockMemory(void* pWhere, USIZE uSizeInBytes)
 #ifdef _DEBUG
     if (munlock(pWhere, uSizeInBytes) != 0) {
         CHAR8 pszExceptionMsg[64] = { 0 };
-        USIZE uPos = CopyStr(pszExceptionMsg, "munlock failed errno = ");
-        Int32ToString(errno, &pszExceptionMsg[uPos]);
+        USIZE uPos = Memory::CopyStr(pszExceptionMsg, "munlock failed errno = ");
+        Memory::Int32ToString(errno, &pszExceptionMsg[uPos]);
 
         throw Exception(pszExceptionMsg);
     }
@@ -90,8 +90,8 @@ void ReleasePage(void* pMemory)
 #ifdef _DEBUG
     if (munmap(pMemory, OsDependent::GetSizeOfPage()) != 0) {
         CHAR8 pszExceptionMsg[64] = { 0 };
-        USIZE uPos = CopyStr(pszExceptionMsg, "munmap failed errno = ");
-        Int32ToString(errno, &pszExceptionMsg[uPos]);
+        USIZE uPos = Memory::CopyStr(pszExceptionMsg, "munmap failed errno = ");
+        Memory::Int32ToString(errno, &pszExceptionMsg[uPos]);
 
         throw Exception(pszExceptionMsg);
     }

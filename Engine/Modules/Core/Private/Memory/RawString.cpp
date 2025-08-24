@@ -1,6 +1,6 @@
 #include "Memory/RawString.h"
 
-namespace Core
+namespace Core::Memory
 {
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -118,4 +118,4 @@ USIZE Int64ToString(INT64 number, CHAR8* pBuffer)
     return uPtrPos;
 }
 
-} // !Core
+} // !Core::Memory

@@ -15,6 +15,10 @@ public:
 
     ~HeapAllocator();
 
+    HeapAllocator(const HeapAllocator& other);
+
+    HeapAllocator(HeapAllocator&& other);
+
 public:
 
     void* Allocate(USIZE uSizeInBytes, USIZE uAlignTo);
