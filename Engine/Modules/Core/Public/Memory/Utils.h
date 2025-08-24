@@ -5,13 +5,16 @@ void* operator new(unsigned long, void* pPtr) noexcept;
 namespace Core::Memory
 {
 
-template<class T> struct RemoveRef 
+template<class T> 
+struct RemoveRef 
 { using Type = T; };
 
-template<class T> struct RemoveRef<T&> 
+template<class T> 
+struct RemoveRef<T&> 
 { using Type = T; };
 
-template<class T> struct RemoveRef<T&&> 
+template<class T> 
+struct RemoveRef<T&&> 
 { using Type = T; };
 
 template<class T>

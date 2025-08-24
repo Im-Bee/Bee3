@@ -31,7 +31,7 @@ public:
 
 private: 
 
-    void IsInRange(void* pPointer);
+    void IsInRange(void* pPointer) const;
 
 private:
 

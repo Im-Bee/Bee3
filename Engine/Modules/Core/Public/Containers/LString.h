@@ -10,6 +10,12 @@ public:
     LString() = default;
     ~LString() = default;
 
+public:
+
+private:
+
+    
+
 };
 
 } // !Core

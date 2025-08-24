@@ -160,7 +160,8 @@ USIZE HeapAllocator::GetAmountOfMemoryLeft() const noexcept
     return reinterpret_cast<USIZE>(m_pMemoryPage) + m_uReservedVirtMem - reinterpret_cast<USIZE>(m_pFirstFree);
 }
 
-void HeapAllocator::IsInRange(void* pPointer)
+// ---------------------------------------------------------------------------------------------------------------------
+void HeapAllocator::IsInRange(void* pPointer) const
 {
     if (reinterpret_cast<USIZE>(m_pMemoryPage)                      > reinterpret_cast<USIZE>(pPointer) || 
         reinterpret_cast<USIZE>(m_pMemoryPage) + m_uReservedVirtMem < reinterpret_cast<USIZE>(pPointer)) {

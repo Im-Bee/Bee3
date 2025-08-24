@@ -5,6 +5,7 @@
 namespace Core::Memory
 {
 
+// ---------------------------------------------------------------------------------------------------------------------
 inline void API CopyBytes(BYTE* pDestination, const BYTE* pszSource, USIZE uAmount)
 {
     while (uAmount--) {
@@ -12,6 +13,7 @@ inline void API CopyBytes(BYTE* pDestination, const BYTE* pszSource, USIZE uAmou
     }
 }
 
+// ---------------------------------------------------------------------------------------------------------------------
 template<USIZE uAmount>
 inline constexpr USIZE CopyBytes(BYTE* pDestination, const BYTE (&szSource)[uAmount])
 { 

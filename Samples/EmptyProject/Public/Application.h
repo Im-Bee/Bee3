@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Console.h"
 #include "IApplication.h"
 #include "ImportExportAppFromExecutable.h"
 #include "EntryPoint/Linux/Entry.h"
@@ -14,14 +13,11 @@ public:
 
 public:
 
-    void Initialize() 
-    { Core::WriteToConsole("Hello from empty application"); }
+    void Initialize();
 
-    void Update() 
-    { Core::WriteToConsole("Updating from empty application"); }
+    void Update();
 
-    void Destroy() 
-    { Core::WriteToConsole("Destroying from empty application"); }
+    void Destroy();
 
 };
 
