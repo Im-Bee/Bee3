@@ -375,7 +375,7 @@ HandleSwitch()
     if [ "$switch" == "testsonly" ]; then
 
         g_IsDebug=true
-        g_Macros="_TESTS_ONLY _DEBUG $g_Macros"
+        g_Macros="_TESTS _TESTS_ONLY _DEBUG $g_Macros"
         _bg_BuildType=$_bg_ConstBuildTypeTests
         return 0
 

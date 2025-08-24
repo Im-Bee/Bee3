@@ -2,7 +2,7 @@
 
 #include "TestMaster.h"
 
-#if _TESTS || _TESTS_ONLY
+#if _TESTS
 #   define TEST(PTESTFUN)   void PTESTFUN##_TEST();                                                                 \
                             static Core::TestInstance PTESTFUN##_TESTSTRCT = Core::TestInstance(PTESTFUN##_TEST);   \
                             void PTESTFUN##_TEST()
