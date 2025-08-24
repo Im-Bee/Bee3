@@ -10,8 +10,8 @@ namespace Core::Memory
 {
 
 // DynamicAllocator // -------------------------------------------------------------------------------------------------
-HeapAllocator::HeapAllocator(USIZE uMem)
-    : m_uReservedVirtMem(uMem)
+HeapAllocator::HeapAllocator(USIZE uVirtualPages)
+    : m_uReservedVirtMem(uVirtualPages * m_uMaxPageSize)
     , m_pMemoryPage(OsDependent::ReserveMemory(m_uReservedVirtMem))
     , m_pFirstFree(m_pMemoryPage)
     , m_pLastBlock(reinterpret_cast<HeapAllocator::Block*>(m_pMemoryPage))
@@ -66,11 +66,7 @@ void HeapAllocator::Deallocate(void* pPtrToBlock)
 { 
     Block* pBlockStruct;
 
-    if (reinterpret_cast<USIZE>(m_pMemoryPage)                      > reinterpret_cast<USIZE>(pPtrToBlock) || 
-        reinterpret_cast<USIZE>(m_pMemoryPage) + m_uReservedVirtMem < reinterpret_cast<USIZE>(pPtrToBlock)) {
-        throw Exception("Pointer passed to deallocation is invalid, this allocator doesn't owns this memory!");
-    }
-
+    IsInRange(pPtrToBlock);
 
     pBlockStruct = reinterpret_cast<Block*>(reinterpret_cast<USIZE>(pPtrToBlock) - sizeof(HeapAllocator::Block));
 
@@ -97,10 +93,48 @@ void HeapAllocator::Deallocate(void* pPtrToBlock)
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
+void* HeapAllocator::Reallocate(void* pOldAlloc, USIZE uSizeInBytes, USIZE uAlignTo)
+{ 
+    Block*  pBlockStruct;
+    USIZE   uLockSize = sizeof(HeapAllocator::Block);
+    USIZE   uOldLen;
+
+    IsInRange(pOldAlloc);
+
+    pBlockStruct = reinterpret_cast<Block*>(reinterpret_cast<USIZE>(pOldAlloc) - sizeof(HeapAllocator::Block));
+
+    if (pBlockStruct != m_pLastBlock) {
+        return Allocate(uSizeInBytes, uAlignTo);
+    }
+
+
+    uOldLen     = pBlockStruct->uLen;
+    uLockSize   = uLockSize + AlignTo(uSizeInBytes, uAlignTo);
+    uLockSize   = AlignTo(uLockSize, alignof(HeapAllocator::Block));
+
+    if (uLockSize <= uOldLen) {
+        return pOldAlloc;
+    }
+    
+    pBlockStruct->uLen = uLockSize;
+
+    OsDependent::LockMemory(pBlockStruct, uLockSize);
+
+    return pOldAlloc;
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
 USIZE HeapAllocator::GetAmountOfMemoryLeft() const noexcept
 {
     return reinterpret_cast<USIZE>(m_pMemoryPage) + m_uReservedVirtMem - reinterpret_cast<USIZE>(m_pFirstFree);
 }
 
+void HeapAllocator::IsInRange(void* pPointer)
+{
+    if (reinterpret_cast<USIZE>(m_pMemoryPage)                      > reinterpret_cast<USIZE>(pPointer) || 
+        reinterpret_cast<USIZE>(m_pMemoryPage) + m_uReservedVirtMem < reinterpret_cast<USIZE>(pPointer)) {
+        throw Exception("Pointer passed to reallocation is invalid, this allocator doesn't owns this memory!");
+    }
+}
 
 } // !Memory

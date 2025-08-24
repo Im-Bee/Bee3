@@ -8,14 +8,10 @@ namespace Core::Memory
 
 class API HeapAllocator 
 {
-    HeapAllocator(USIZE uMem);
 
 public:
     
-    template<USIZE uVirtualPages = 1>
-    constexpr inline HeapAllocator()
-        : HeapAllocator(m_uMaxPageSize * uVirtualPages)
-    { }
+    HeapAllocator(USIZE uVirtualPages = 1);
 
     ~HeapAllocator();
 
@@ -25,7 +21,13 @@ public:
 
     void Deallocate(void* pPtrToBlock);
 
+    void* Reallocate(void* pOldAlloc, USIZE uSizeInBytes, USIZE uAlignTo);
+
     USIZE GetAmountOfMemoryLeft() const noexcept;
+
+private: 
+
+    void IsInRange(void* pPointer);
 
 private:
 

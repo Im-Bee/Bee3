@@ -1,6 +1,7 @@
 #include "Memory/OS.h"
 
 #include "Exception.h"
+#include "Memory/RawString.h"
 
 
        
@@ -46,6 +47,18 @@ void* ReserveMemory(USIZE uSizeInBytes)
 // ---------------------------------------------------------------------------------------------------------------------
 void LockMemory(void* pWhere, USIZE uSizeInBytes)
 {
+#ifdef _DEBUG
+    if (mlock(pWhere, uSizeInBytes) != 0) {
+        CHAR8 pszExceptionMsg[64] = { 0 };
+        USIZE uPos = CopyStr(pszExceptionMsg, "mlock failed errno = ");
+        Int32ToString(errno, &pszExceptionMsg[uPos]);
+
+        throw Exception(pszExceptionMsg);
+    }
+
+    return;
+#endif // !_DEBUG
+       
     if (mlock(pWhere, uSizeInBytes) != 0) {
         throw Exception("mlock failed");
     }
@@ -54,6 +67,18 @@ void LockMemory(void* pWhere, USIZE uSizeInBytes)
 // ---------------------------------------------------------------------------------------------------------------------
 void UnlockMemory(void* pWhere, USIZE uSizeInBytes)
 {
+#ifdef _DEBUG
+    if (munlock(pWhere, uSizeInBytes) != 0) {
+        CHAR8 pszExceptionMsg[64] = { 0 };
+        USIZE uPos = CopyStr(pszExceptionMsg, "munlock failed errno = ");
+        Int32ToString(errno, &pszExceptionMsg[uPos]);
+
+        throw Exception(pszExceptionMsg);
+    }
+
+    return;
+#endif // !_DEBUG
+
     if (munlock(pWhere, uSizeInBytes) != 0) {
         throw Exception("munlock failed");
     }
@@ -62,6 +87,18 @@ void UnlockMemory(void* pWhere, USIZE uSizeInBytes)
 // ---------------------------------------------------------------------------------------------------------------------
 void ReleasePage(void* pMemory)
 {
+#ifdef _DEBUG
+    if (munmap(pMemory, OsDependent::GetSizeOfPage()) != 0) {
+        CHAR8 pszExceptionMsg[64] = { 0 };
+        USIZE uPos = CopyStr(pszExceptionMsg, "munmap failed errno = ");
+        Int32ToString(errno, &pszExceptionMsg[uPos]);
+
+        throw Exception(pszExceptionMsg);
+    }
+
+    return;
+#endif // !_DEBUG
+ 
     if (munmap(pMemory, OsDependent::GetSizeOfPage()) != 0) {
         throw Exception("munmap failed");
     }

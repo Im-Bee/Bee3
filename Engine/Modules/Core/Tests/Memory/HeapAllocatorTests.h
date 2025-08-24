@@ -77,5 +77,36 @@ TEST(HeapAlloctor)
     Core::WriteToConsole(pszMemoryLeft);
 }
 
+TEST(HeapAlloctorReallocs)
+{
+    Core::Memory::HeapAllocator da(8);
+
+    USIZE uSize = 240;
+    USIZE uSizeInBytes = uSize * sizeof(double);
+    constexpr USIZE uAligment = alignof(double);
+
+    double* pDoubleBuffer = reinterpret_cast<double*>(da.Allocate(uSizeInBytes, uAligment));
+
+    for (int i = 0; i < uSize; ++i) {
+        pDoubleBuffer[i] = static_cast<double>(i) + 0.5;
+    }
+
+    uSize = 480;
+    uSizeInBytes = uSize * sizeof(double);
+    double* pRealloc = reinterpret_cast<double*>(da.Reallocate(pDoubleBuffer, uSizeInBytes, uAligment));
+
+    ASSERT(pRealloc, pDoubleBuffer);
+
+    for (int i = 0; i < 240; ++i) {
+        ASSERT(pDoubleBuffer[i], static_cast<double>(i) + 0.5);
+    }
+
+    for (int i = 0; i < uSize; ++i) {
+        pDoubleBuffer[i] = static_cast<double>(i) + 0.5;
+        ASSERT(pDoubleBuffer[i], static_cast<double>(i) + 0.5);
+    }
+}
+
+
 } // !Tests
 

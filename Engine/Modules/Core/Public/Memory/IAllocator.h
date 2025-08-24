@@ -21,6 +21,9 @@ public:
     void Deallocate(void* pPtr)
     { throw Exception("This function doesn't have implementation."); }
 
+    void* Reallocate(void* pOldAlloc, USIZE uSizeInBytes, USIZE uAlignTo)
+    { throw Exception("This function doesn't have implementation."); }
+
     USIZE GetAmountOfMemoryLeft() const noexcept
     { return 0; }
 
