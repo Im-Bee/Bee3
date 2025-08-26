@@ -1,5 +1,6 @@
 .cache/
 .git/
+.vs/
 compile_commands.json
 Bin/
 Engine/Intermediate/
