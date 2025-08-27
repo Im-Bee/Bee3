@@ -1,5 +1,6 @@
 #pragma once
 
+#include "AppManager.h"
 #include "IApplication.h"
 #include "ImportExportAppFromExecutable.h"
 
@@ -23,11 +24,14 @@ int main()
 {
     RUNTESTS();
 
-    auto* pApp = ::App::ImportApp();
+    auto* pApp        = ::App::ImportApp();
+    auto* pAppManager = &::App::AppManager::Get();
 
     ::App::AppInit(pApp);
-
-    ::App::AppUpdate(pApp);
+    
+    while (pAppManager->AreWeAlive()) {
+        ::App::AppUpdate(pApp);
+    }
 
     ::App::AppDestroy(pApp);
 
