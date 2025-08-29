@@ -27,14 +27,23 @@ public:
 
 public:
 
-    void AddTest(PVOIDFN pTest);
+    void AddTest(PVOIDFN pTest, const CHAR8* pszTestName, USIZE uTestNameLen);
 
     void Run();
+    
+private:
+
+    struct Test 
+    {
+        PVOIDFN         pTest;
+        const CHAR8*    pszTestName;
+        USIZE           uTestNameLen;
+    };
 
 private:
 
     USIZE m_uTestAmount;
-    PVOIDFN m_pTestsBuf[64];
+    Test m_pTestsBuf[64];
 
 };
 

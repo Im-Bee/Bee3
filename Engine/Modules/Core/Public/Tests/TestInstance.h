@@ -3,8 +3,8 @@
 #include "TestMaster.h"
 
 #if _TESTS
-#   define TEST(PTESTFUN)   void PTESTFUN##_TEST();                                                                 \
-                            static Core::TestInstance PTESTFUN##_TESTSTRCT = Core::TestInstance(PTESTFUN##_TEST);   \
+#   define TEST(PTESTFUN)   void PTESTFUN##_TEST();                                                                            \
+                            static Core::TestInstance PTESTFUN##_TESTSTRCT = Core::TestInstance(PTESTFUN##_TEST, #PTESTFUN);   \
                             void PTESTFUN##_TEST()
 #else
 #   define TEST(PTESTFUN)
@@ -15,7 +15,7 @@ namespace Core
 
 struct TestInstance
 {
-    TestInstance(PVOIDFN pTest);
+    TestInstance(PVOIDFN pTest, const CHAR8 szName[]);
     ~TestInstance() = default;
 };
 

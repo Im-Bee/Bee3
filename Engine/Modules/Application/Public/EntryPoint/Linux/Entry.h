@@ -24,12 +24,11 @@ int main()
 {
     RUNTESTS();
 
-    auto* pApp        = ::App::ImportApp();
-    auto* pAppManager = &::App::AppManager::Get();
+    auto* pApp = ::App::ImportApp();
 
     ::App::AppInit(pApp);
     
-    while (pAppManager->AreWeAlive()) {
+    while (::App::AppManager::AreWeAlive()) {
         ::App::AppUpdate(pApp);
     }
 

@@ -23,5 +23,14 @@ inline constexpr USIZE CopyStr(CHAR8* pDestination, const CHAR8 (&szSource)[uAmo
     return uAmount;
 }
 
+inline constexpr USIZE ZStrLen(const CHAR8* pszStr) 
+{
+    USIZE uLen = 0;
+    while (pszStr[uLen] != '\0') {
+        ++uLen;
+    }
+    return uLen;
+}
+
 } // !Core::Memory
 

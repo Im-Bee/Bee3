@@ -15,9 +15,9 @@ TestMaster::TestMaster()
 { }
 
 // ---------------------------------------------------------------------------------------------------------------------
-void TestMaster::AddTest(PVOIDFN pTest)
+void TestMaster::AddTest(PVOIDFN pTest, const CHAR8* pszTestName, USIZE uTestNameLen)
 { 
-    m_pTestsBuf[m_uTestAmount++] = pTest;
+    m_pTestsBuf[m_uTestAmount++] = Test { pTest, pszTestName, uTestNameLen };
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -28,11 +28,14 @@ void TestMaster::Run()
     UINT32 uTestsPassed = 0;
     for (USIZE i = 0; i < m_uTestAmount; ++i) {
         try {
-            m_pTestsBuf[i]();
+            m_pTestsBuf[i].pTest();
             ++uTestsPassed;
         }
         catch (...)
-        { }
+        { 
+            Core::WriteToConsole("Test not passed!: ");
+            Core::WriteToConsoleN(m_pTestsBuf[i].pszTestName, m_pTestsBuf[i].uTestNameLen);
+        }
     }
 
     CHAR8 pszPassed[16] = { 0 };
