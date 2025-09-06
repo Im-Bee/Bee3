@@ -17,12 +17,12 @@
 #ifdef _TESTS_ONLY 
 #    define RUNTESTS() do { ::Core::TestMaster::Get().Run(); return 0; } while (0)
 #endif // !_TESTS_ONLY 
-       
-
 
 int main() 
 {
     RUNTESTS();
+
+    ::App::AppManager::Get();
 
     auto* pApp = ::App::ImportApp();
 
@@ -35,6 +35,8 @@ int main()
     ::App::AppDestroy(pApp);
 
     ::App::AppDelete(pApp);
+
+    ::App::AppManager::Get().~AppManager();
 
     return 0;
 }

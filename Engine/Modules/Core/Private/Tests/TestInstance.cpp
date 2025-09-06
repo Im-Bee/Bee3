@@ -7,9 +7,7 @@ namespace Core
 
 // ---------------------------------------------------------------------------------------------------------------------
 TestInstance::TestInstance(PVOIDFN pTest, const CHAR8 szName[])
-{
-    TestMaster::Get().AddTest(pTest, szName, Memory::ZStrLen(szName));
-}
+{ TestMaster::Get().AddTest(pTest, szName, Memory::ZStrLen(szName)); }
 
 } // !Core
 

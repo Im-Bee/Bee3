@@ -16,9 +16,7 @@ TestMaster::TestMaster()
 
 // ---------------------------------------------------------------------------------------------------------------------
 void TestMaster::AddTest(PVOIDFN pTest, const CHAR8* pszTestName, USIZE uTestNameLen)
-{ 
-    m_pTestsBuf[m_uTestAmount++] = Test { pTest, pszTestName, uTestNameLen };
-}
+{ m_pTestsBuf[m_uTestAmount++] = Test { pTest, pszTestName, uTestNameLen }; }
 
 // ---------------------------------------------------------------------------------------------------------------------
 void TestMaster::Run()
@@ -48,5 +46,5 @@ void TestMaster::Run()
     Core::WriteToConsole("Tests finished...");
 }
 
-}
+} // !Core
 
