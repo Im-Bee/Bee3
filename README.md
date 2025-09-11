@@ -1,7 +1,7 @@
 # Bee3
 
 Small engine like pack of dynamic libraries. 
-Built from ground up with minmal use of standard library headers, mainly focusing on operating system headers.
+Built from ground up with minmal use of standard library headers, mainly focusing on use of operating system headers.
 Still linux and windows compatible.
 
 Pretty much, heavy work in progress.
@@ -37,4 +37,5 @@ To complie a project from custom directory:
 ### Windows
 
 Use provided Build.bat script.
+
 Currently work in progress.
