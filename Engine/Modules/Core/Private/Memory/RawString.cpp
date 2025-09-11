@@ -14,9 +14,10 @@ constexpr static const UINT32 PowsOf10Int32[] =
 // ---------------------------------------------------------------------------------------------------------------------
 constexpr UINT32 Int32FindNearestPowOf10(INT32 number)
 {
+    constexpr USIZE uTableSize = sizeof(PowsOf10Int32) / sizeof(UINT32);
     USIZE uIndex = 0;
 
-    while (uIndex < sizeof(PowsOf10Int32)) {
+    while (uIndex < uTableSize) {
         if (number < PowsOf10Int32[uIndex]) {
             break;
         }
@@ -40,9 +41,10 @@ constexpr static const UINT64 PowsOf10Int64[] =
 // ---------------------------------------------------------------------------------------------------------------------
 constexpr UINT64 Int64FindNearestPowOf10(INT64 number)
 {
+    constexpr USIZE uTableSize = sizeof(PowsOf10Int64) / sizeof(UINT64);
     USIZE uIndex = 0;
 
-    while (uIndex < sizeof(PowsOf10Int64)) {
+    while (uIndex < uTableSize) {
         if (number < PowsOf10Int64[uIndex]) {
             break;
         }

@@ -1,10 +1,7 @@
-#pragma once
+#include "CoreMinimal.h"
 
-
-#include "Assert.h"
 #include "Memory/HeapAllocator.h"
 #include "Memory/Utils.h"
-#include "Tests/TestInstance.h"
 
 
 
@@ -32,10 +29,10 @@ TEST(HeapAlloctor)
     pInt4[99] = 100;
 
 
-    ASSERT(reinterpret_cast<USIZE>(pInt ) % alignof(int), 0);
-    ASSERT(reinterpret_cast<USIZE>(pInt2) % alignof(int), 0);
-    ASSERT(reinterpret_cast<USIZE>(pInt3) % alignof(int), 0);
-    ASSERT(reinterpret_cast<USIZE>(pInt4) % alignof(int), 0);
+    ASSERT(reinterpret_cast<Core::USIZE>(pInt ) % alignof(int), 0);
+    ASSERT(reinterpret_cast<Core::USIZE>(pInt2) % alignof(int), 0);
+    ASSERT(reinterpret_cast<Core::USIZE>(pInt3) % alignof(int), 0);
+    ASSERT(reinterpret_cast<Core::USIZE>(pInt4) % alignof(int), 0);
 
     ASSERT(pInt4[0], 100);
     ASSERT(pInt4[99], 100);
@@ -67,16 +64,16 @@ TEST(HeapAlloctor)
     ASSERT(object.a, 1);
     ASSERT(object.b, 20);
     ASSERT(object.c, 30);
-    ASSERT(reinterpret_cast<USIZE>(pObj) % alignof(Object), 0);
+    ASSERT(reinterpret_cast<Core::USIZE>(pObj) % alignof(Object), 0);
 }
 
 TEST(HeapAlloctorReallocs)
 {
     Core::Memory::HeapAllocator da(8);
 
-    USIZE uSize = 240;
-    USIZE uSizeInBytes = uSize * sizeof(double);
-    constexpr USIZE uAligment = alignof(double);
+    Core::USIZE uSize = 240;
+    Core::USIZE uSizeInBytes = uSize * sizeof(double);
+    constexpr Core::USIZE uAligment = alignof(double);
 
     double* pDoubleBuffer = reinterpret_cast<double*>(da.Allocate(uSizeInBytes, uAligment));
 
@@ -105,9 +102,9 @@ TEST(HeapAlloctorAligment)
     Core::Memory::HeapAllocator da(16);
 
     double* pDoubleBuffer = reinterpret_cast<double*>(da.Allocate(240 * sizeof(double), alignof(double)));
-    ASSERT(reinterpret_cast<USIZE>(pDoubleBuffer) % alignof(double), 0);
+    ASSERT(reinterpret_cast<Core::USIZE>(pDoubleBuffer) % alignof(double), 0);
     double* pRealloc = reinterpret_cast<double*>(da.Reallocate(pDoubleBuffer, 240 * sizeof(double), alignof(double)));
-    ASSERT(reinterpret_cast<USIZE>(pRealloc) % alignof(double), 0);
+    ASSERT(reinterpret_cast<Core::USIZE>(pRealloc) % alignof(double), 0);
 
     class TestClass
     {
@@ -116,7 +113,7 @@ TEST(HeapAlloctorAligment)
         INT32 b;
         INT16 c;
         INT32 d;
-        CHAR8 e;
+        Core::CHAR8 e;
     };
 
     TestClass* pClass = reinterpret_cast<TestClass*>(da.Allocate(240 * sizeof(TestClass), alignof(TestClass)));

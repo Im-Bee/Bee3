@@ -1,6 +1,7 @@
 #pragma once
 
-#include "CoreMinimal.h"
+#include "ImportExportMacros.h"
+#include "Types.h"
 
 namespace Core
 {

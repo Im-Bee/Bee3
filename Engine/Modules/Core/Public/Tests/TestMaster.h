@@ -1,6 +1,7 @@
 #pragma once
 
-#include "CoreMinimal.h"
+#include "ImportExportMacros.h"
+#include "Types.h"
 
 namespace Core
 {
@@ -38,6 +39,7 @@ private:
         PVOIDFN         pTest;
         const CHAR8*    pszTestName;
         USIZE           uTestNameLen;
+        bool            bPassed;
     };
 
 private:

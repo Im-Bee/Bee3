@@ -1,11 +1,13 @@
 #pragma once
 
-#include "TestMaster.h"
+#include "ImportExportMacros.h"
+#include "Types.h"
+
 
 #if _TESTS
-#   define TEST(PTESTFUN)   void PTESTFUN##_TEST();                                                                            \
+#   define TEST(PTESTFUN)   inline void PTESTFUN##_TEST();                                                                            \
                             static Core::TestInstance PTESTFUN##_TESTSTRCT = Core::TestInstance(PTESTFUN##_TEST, #PTESTFUN);   \
-                            void PTESTFUN##_TEST()
+                            inline void PTESTFUN##_TEST()
 #else
 #   define TEST(PTESTFUN)
 #endif // !_TESTS

@@ -1,4 +1,5 @@
 #pragma once
 
-#include "Types.h"
+#include "LinuxTypes.h"
+#include "LinuxSystemIncludes.h"
 #include "LinuxImportExportMacros.h"

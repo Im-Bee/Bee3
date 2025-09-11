@@ -1,5 +1,6 @@
 #pragma once
 
+#include "CoreMinimal.h"
 #include "IApplication.h"
 #include "ImportExportAppFromExecutable.h"
 #include "EntryPoint/Linux/Entry.h"

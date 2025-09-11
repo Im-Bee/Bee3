@@ -744,12 +744,6 @@ for module in $g_EngineModules; do
 
     fi
 
-    if [ "$g_EngineModuleBuildType" == "$_bg_ConstBuildTypeTests" ]; then
-
-        g_PublicIncludes="-I$g_BuildDirRelativePathToEngineModules$module/ $g_PublicIncludes"
-
-    fi
-
     bash ./Compile.sh "$g_BuildDirRelativePathToEngineModules$module/" "$module" "$g_PublicIncludes" "$g_Macros _EXPORT"
 
     bash ./Link.sh "$module" "$_bg_ConstDynamicLibBinaryType" "$(cat "$g_BuildDirRelativePathToEngineModules$module/Module.dep")"

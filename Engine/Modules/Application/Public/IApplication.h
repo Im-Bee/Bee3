@@ -7,8 +7,8 @@ class IApplication
 {
 public:
 
-    IApplication() = default;
-    ~IApplication() = default;
+    IApplication() = delete;
+    ~IApplication() = delete;
 
 public:
 

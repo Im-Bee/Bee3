@@ -1,7 +1,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Exception.h"
 
 namespace Core::Memory
 {

@@ -29,14 +29,27 @@ void TestMaster::Run()
     for (USIZE i = 0; i < m_uTestAmount; ++i) {
         try {
             m_pTestsBuf[i].pTest();
+
+            m_pTestsBuf[i].bPassed = true;
             ++uTestsPassed;
+
+            Core::WriteToConsoleN("Passed test: ");
+            Core::WriteToConsole(m_pTestsBuf[i].pszTestName, m_pTestsBuf[i].uTestNameLen);
         }
         catch (...)
         { 
-            Core::WriteToConsole("Test not passed!: ");
-            Core::WriteToConsoleN(m_pTestsBuf[i].pszTestName, m_pTestsBuf[i].uTestNameLen);
+            m_pTestsBuf[i].bPassed = false;
+
+            Core::WriteToConsoleN("Failed test: ");
+            Core::WriteToConsole(m_pTestsBuf[i].pszTestName, m_pTestsBuf[i].uTestNameLen);
         }
     }
+    
+    // for (USIZE i = 0; i < m_uTestAmount; ++i) {
+    //     if (m_pTestsBuf[i].bPassed) {
+    //         continue;
+    //     }
+    // }
 
     CHAR8 pszPassed[16] = { 0 };
     Core::Memory::Int32ToString(uTestsPassed, pszPassed);
