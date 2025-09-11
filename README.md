@@ -1,11 +1,23 @@
 # Bee3
 
+Small engine like pack of dynamic libraries. 
+Built from ground up with minmal use of standard library headers, mainly focusing on operating system headers.
+Still linux and windows compatible.
+
+Pretty much, heavy work in progress.
+
+## Goal
+
+Main goal of this project is a playground for learning and experimenting with new ideas.
+In future this code might be a good fundaiton for a real application or cool indie game.
+It's a hobby project that I work on during my available free time.
+
 ## Build
 
 ### Linux
 
 Run provided Build.sh scrpit in root directory of this repository.
-There is a `--help` with list of available options.
+Use `--help` option to list available build options.
 
 To compile a project from Samples directory:
 ```
