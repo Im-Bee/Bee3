@@ -4,7 +4,7 @@ Small engine like pack of dynamic libraries.
 Built from ground up with minmal use of standard library headers, mainly focusing on use of operating system headers.
 Still linux and windows compatible.
 
-Pretty much, heavy work in progress.
+### Pretty much, heavy work in progress.
 
 ## Goal
 
@@ -40,4 +40,5 @@ To complie a project from custom directory:
 Use provided Build.bat script.
 
 Currently work in progress.
+
 
