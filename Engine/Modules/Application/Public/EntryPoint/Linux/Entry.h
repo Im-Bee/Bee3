@@ -10,6 +10,8 @@ int main()
 {
     RUNTESTS();
 
+    ::App::AppManager::Get();
+
     auto* pApp = ::App::ImportApp();
 
     ::App::AppInit(pApp);
@@ -21,6 +23,8 @@ int main()
     ::App::AppDestroy(pApp);
 
     ::App::AppDelete(pApp);
+
+    ::App::AppManager::Get().~AppManager();
 
     return 0;
 }

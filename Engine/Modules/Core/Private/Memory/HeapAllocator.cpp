@@ -4,6 +4,7 @@
 #include "OS.h"
 #include "Memory/Aligment.h"
 #include "Memory/Bytes.h"
+#include "OS.h"
 
 
 
@@ -61,10 +62,6 @@ void* HeapAllocator::Allocate(USIZE uSizeInBytes, USIZE uAlignTo)
     Block*  pLockedBlock    = nullptr;
     USIZE   uLenPrev;
     void*   pLocked;
-
-    if (uSizeInBytes == 0 || uSizeInBytes >= 4'294'967'296 /* 4 GB, huge number */) {
-        throw Exception("Tried to allocate 0 or more then 4GB of memory on once");
-    }
 
     uLockSize = uLockSize + AlignTo(uSizeInBytes, uAlignTo);
     uLockSize = AlignTo(uLockSize, alignof(HeapAllocator::Block));

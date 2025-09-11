@@ -13,9 +13,7 @@ namespace Core
 
 // ---------------------------------------------------------------------------------------------------------------------
 USIZE WriteToConsoleN(const CHAR8* pszString, USIZE uLen) noexcept
-{
-    return write(STDOUT_FILENO, pszString, uLen);
-}
+{ return write(STDOUT_FILENO, pszString, uLen); }
 
 // ---------------------------------------------------------------------------------------------------------------------
 //
