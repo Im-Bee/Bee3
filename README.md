@@ -1,8 +1,8 @@
-### Bee3
+# Bee3
 
 ## Build
 
-# Linux
+### Linux
 
 Run provided Build.sh scrpit in root directory of this repository.
 There is a `--help` with list of available options.
@@ -22,7 +22,7 @@ To complie a project from custom directory:
 ./Build.sh --customtargetpath ./../MyProjects `PROJECT_NAME`
 ```
 
-# Windows
+### Windows
 
 Use provided Build.bat script.
 Currently work in progress.
