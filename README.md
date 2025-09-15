@@ -9,7 +9,7 @@ Still linux and windows compatible.
 ## Goal
 
 Main goal of this project is a playground for learning and experimenting with new ideas.
-I really want to avoid use of standard libraries like <thread> etc and use system implementations instead.
+I really want to avoid use of standard libraries like thread, string etc and use system implementations instead.
 In future this code might be a good fundaiton for a real application or cool indie game.
 It's a hobby project that I work on during my available free time.
 
@@ -40,5 +40,6 @@ To complie a project from custom directory:
 Use provided Build.bat script.
 
 Currently work in progress.
+
 
 
